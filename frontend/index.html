@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PlantCare AI - Deteksi kesehatan tanaman dan penyakit daun menggunakan kecerdasan buatan. Upload foto daun untuk analisis instan.">
+    <title>PlantCare AI — Deteksi Penyakit Tanaman Cerdas</title>
+
+    <!-- Google Fonts: Inter + Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ========== BACKGROUND PARTICLES ========== -->
+    <div class="bg-particles" aria-hidden="true">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- ========== HEADER / NAVBAR ========== -->
+    <header class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#" class="logo" id="logo">
+                <span class="logo-icon">🌿</span>
+                <span class="logo-text">PlantCare <span class="logo-accent">AI</span></span>
+            </a>
+            <nav class="nav-links">
+                <a href="#features" class="nav-link">Fitur</a>
+                <a href="#upload-section" class="nav-link">Analisis</a>
+                <a href="#how-it-works" class="nav-link">Cara Kerja</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- ========== HERO SECTION ========== -->
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    AI-Powered Plant Diagnostics
+                </div>
+                <h1 class="hero-title">
+                    Jaga Kesehatan <br>
+                    <span class="hero-title-accent">Tanaman Anda</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Upload foto daun tanaman, dan biarkan AI kami mendeteksi penyakit serta memberikan rekomendasi perawatan yang tepat — dalam hitungan detik.
+                </p>
+                <a href="#upload-section" class="hero-cta" id="hero-cta">
+                    <span>Mulai Analisis</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-card glass-card">
+                    <div class="hero-card-icon">🌱</div>
+                    <div class="hero-card-label">Deteksi Cepat</div>
+                </div>
+                <div class="hero-card glass-card" style="animation-delay: 0.3s">
+                    <div class="hero-card-icon">🔬</div>
+                    <div class="hero-card-label">Akurasi Tinggi</div>
+                </div>
+                <div class="hero-card glass-card" style="animation-delay: 0.6s">
+                    <div class="hero-card-icon">💊</div>
+                    <div class="hero-card-label">Rekomendasi</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== FEATURES SECTION ========== -->
+        <section class="features" id="features">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">Kenapa PlantCare AI?</span>
+                    <h2 class="section-title">Fitur Unggulan</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card" id="feature-1">
+                        <div class="feature-icon-wrap">
+                            <span class="feature-icon">📸</span>
+                        </div>
+                        <h3>Upload Mudah</h3>
+                        <p>Cukup drag-and-drop atau pilih foto dari galeri perangkat Anda. Mendukung format JPG, PNG, dan WebP.</p>
+                    </div>
+                    <div class="feature-card" id="feature-2">
+                        <div class="feature-icon-wrap">
+                            <span class="feature-icon">🧠</span>
+                        </div>
+                        <h3>AI Gemini Vision</h3>
+                        <p>Didukung oleh Google Gemini, model AI terbaru yang mampu menganalisis gambar dengan presisi tinggi.</p>
+                    </div>
+                    <div class="feature-card" id="feature-3">
+                        <div class="feature-icon-wrap">
+                            <span class="feature-icon">📋</span>
+                        </div>
+                        <h3>Laporan Detail</h3>
+                        <p>Dapatkan status kesehatan, nama penyakit, deskripsi, dan rekomendasi perawatan dalam satu laporan.</p>
+                    </div>
+                    <div class="feature-card" id="feature-4">
+                        <div class="feature-icon-wrap">
+                            <span class="feature-icon">⚡</span>
+                        </div>
+                        <h3>Hasil Instan</h3>
+                        <p>Proses analisis hanya memakan waktu beberapa detik saja. Cepat, akurat, dan mudah dipahami.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== UPLOAD & ANALYSIS SECTION ========== -->
+        <section class="upload-section" id="upload-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">Analisis Tanaman</span>
+                    <h2 class="section-title">Upload Foto Daun</h2>
+                    <p class="section-desc">Ambil foto daun yang ingin Anda periksa kesehatannya, lalu unggah di bawah ini.</p>
+                </div>
+
+                <div class="analysis-wrapper">
+                    <!-- Upload Area -->
+                    <div class="upload-area-wrapper">
+                        <div class="upload-dropzone" id="upload-dropzone">
+                            <div class="dropzone-content" id="dropzone-content">
+                                <div class="dropzone-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                </div>
+                                <p class="dropzone-text">Seret & lepas foto di sini</p>
+                                <p class="dropzone-hint">atau</p>
+                                <label for="file-input" class="dropzone-btn" id="file-input-label">
+                                    Pilih dari Galeri
+                                </label>
+                                <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" hidden>
+                                <p class="dropzone-formats">JPG, PNG, WebP — Maks. 10MB</p>
+                            </div>
+
+                            <!-- Preview (ditampilkan setelah file dipilih) -->
+                            <div class="preview-container" id="preview-container" style="display: none;">
+                                <img id="preview-image" src="" alt="Preview gambar tanaman">
+                                <button class="preview-remove" id="preview-remove" title="Hapus gambar">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </button>
+                                <div class="preview-filename" id="preview-filename"></div>
+                            </div>
+                        </div>
+
+                        <!-- Tombol Analisis -->
+                        <button class="analyze-btn" id="analyze-btn" disabled>
+                            <span class="analyze-btn-text">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                Analisis Tanaman
+                            </span>
+                            <!-- Spinner saat loading -->
+                            <span class="analyze-btn-loading" style="display: none;">
+                                <span class="spinner"></span>
+                                Menganalisis...
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- Hasil Analisis -->
+                    <div class="result-panel" id="result-panel" style="display: none;">
+                        <div class="result-header">
+                            <h3 class="result-title">Hasil Analisis</h3>
+                            <div class="result-badge" id="result-badge"></div>
+                        </div>
+
+                        <div class="result-body">
+                            <!-- Status -->
+                            <div class="result-item" id="result-status-card">
+                                <div class="result-item-icon" id="result-status-icon">🌿</div>
+                                <div class="result-item-content">
+                                    <span class="result-item-label">Status</span>
+                                    <span class="result-item-value" id="result-status"></span>
+                                </div>
+                            </div>
+
+                            <!-- Nama Penyakit -->
+                            <div class="result-item" id="result-disease-card">
+                                <div class="result-item-icon">🦠</div>
+                                <div class="result-item-content">
+                                    <span class="result-item-label">Nama Penyakit</span>
+                                    <span class="result-item-value" id="result-disease"></span>
+                                </div>
+                            </div>
+
+                            <!-- Deskripsi -->
+                            <div class="result-item result-item-wide">
+                                <div class="result-item-icon">📝</div>
+                                <div class="result-item-content">
+                                    <span class="result-item-label">Deskripsi</span>
+                                    <p class="result-item-text" id="result-description"></p>
+                                </div>
+                            </div>
+
+                            <!-- Rekomendasi -->
+                            <div class="result-item result-item-wide result-item-highlight">
+                                <div class="result-item-icon">💡</div>
+                                <div class="result-item-content">
+                                    <span class="result-item-label">Rekomendasi Perawatan</span>
+                                    <p class="result-item-text" id="result-recommendation"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tombol untuk analisis ulang -->
+                        <button class="reset-btn" id="reset-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="23 4 23 10 17 10"></polyline>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                            </svg>
+                            Analisis Gambar Lain
+                        </button>
+                    </div>
+
+                    <!-- Loading Skeleton (tampil saat proses analisis) -->
+                    <div class="skeleton-panel" id="skeleton-panel" style="display: none;">
+                        <div class="skeleton-header">
+                            <div class="skeleton-line skeleton-title"></div>
+                            <div class="skeleton-badge"></div>
+                        </div>
+                        <div class="skeleton-body">
+                            <div class="skeleton-card">
+                                <div class="skeleton-circle"></div>
+                                <div class="skeleton-text-group">
+                                    <div class="skeleton-line skeleton-sm"></div>
+                                    <div class="skeleton-line skeleton-md"></div>
+                                </div>
+                            </div>
+                            <div class="skeleton-card">
+                                <div class="skeleton-circle"></div>
+                                <div class="skeleton-text-group">
+                                    <div class="skeleton-line skeleton-sm"></div>
+                                    <div class="skeleton-line skeleton-md"></div>
+                                </div>
+                            </div>
+                            <div class="skeleton-card skeleton-wide">
+                                <div class="skeleton-circle"></div>
+                                <div class="skeleton-text-group">
+                                    <div class="skeleton-line skeleton-sm"></div>
+                                    <div class="skeleton-line skeleton-lg"></div>
+                                    <div class="skeleton-line skeleton-lg"></div>
+                                </div>
+                            </div>
+                            <div class="skeleton-card skeleton-wide">
+                                <div class="skeleton-circle"></div>
+                                <div class="skeleton-text-group">
+                                    <div class="skeleton-line skeleton-sm"></div>
+                                    <div class="skeleton-line skeleton-lg"></div>
+                                    <div class="skeleton-line skeleton-lg"></div>
+                                    <div class="skeleton-line skeleton-md"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== HOW IT WORKS ========== -->
+        <section class="how-it-works" id="how-it-works">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-tag">Langkah Mudah</span>
+                    <h2 class="section-title">Cara Kerja</h2>
+                </div>
+                <div class="steps-grid">
+                    <div class="step-card" id="step-1">
+                        <div class="step-number">01</div>
+                        <h3>Upload Foto</h3>
+                        <p>Ambil foto daun tanaman Anda menggunakan kamera atau pilih dari galeri perangkat.</p>
+                    </div>
+                    <div class="step-connector" aria-hidden="true">
+                        <svg width="40" height="24" viewBox="0 0 40 24"><path d="M0 12h36m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="step-card" id="step-2">
+                        <div class="step-number">02</div>
+                        <h3>AI Menganalisis</h3>
+                        <p>Google Gemini Vision akan menganalisis gambar dan mendeteksi potensi penyakit pada daun.</p>
+                    </div>
+                    <div class="step-connector" aria-hidden="true">
+                        <svg width="40" height="24" viewBox="0 0 40 24"><path d="M0 12h36m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="step-card" id="step-3">
+                        <div class="step-number">03</div>
+                        <h3>Dapatkan Hasil</h3>
+                        <p>Lihat laporan lengkap beserta rekomendasi perawatan untuk tanaman Anda.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer" id="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="logo-icon">🌿</span>
+                <span class="logo-text">PlantCare <span class="logo-accent">AI</span></span>
+            </div>
+            <p class="footer-copy">&copy; 2026 PlantCare AI. Didukung oleh Google Gemini Vision.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
