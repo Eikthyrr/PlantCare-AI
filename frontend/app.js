@@ -12,10 +12,8 @@
 // Konfigurasi
 // ==========================================
 const CONFIG = {
-    // URL endpoint backend FastAPI (otomatis deteksi local vs production)
-    API_URL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-        ? 'http://localhost:8000/api/analyze'
-        : 'https://plantcare-ai-backend.onrender.com/api/analyze', // Ganti dengan URL backend Render Anda nanti
+    // URL endpoint backend FastAPI (relatif untuk mendukung All-in-One deployment)
+    API_URL: '/api/analyze',
     // Batas ukuran file: 10MB
     MAX_FILE_SIZE: 10 * 1024 * 1024,
     // Tipe file yang diterima
