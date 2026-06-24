@@ -19,7 +19,7 @@ Aplikasi web *full-stack* berbasis AI untuk mendeteksi kesehatan tanaman dan men
 - **Frontend:** HTML5, CSS3 (Vanilla CSS), Vanilla JavaScript.
 - **Backend:** Python (FastAPI framework).
 - **AI Engine:** Google Gemini API (model `gemini-2.5-flash`).
-- **Deployment:** Vercel (All-in-One: Frontend & Serverless Backend).
+- **Deployment:** Vercel.
 
 ---
 
