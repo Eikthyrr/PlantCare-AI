@@ -1,8 +1,8 @@
-# 🌿 PlantCare AI — Deteksi Kesehatan Tanaman & Penyakit Daun
+# PlantCare AI — Deteksi Kesehatan Tanaman & Penyakit Daun
 
 Aplikasi web *full-stack* berbasis AI untuk mendeteksi kesehatan tanaman dan menganalisis penyakit daun dari foto secara instan. Didukung oleh **FastAPI** di backend dan integrasi **Google Gemini API (Vision)**.
 
-## ✨ Fitur Utama
+## Fitur Utama
 - **Nature-Themed UI/UX** — Desain antarmuka modern bernuansa alam dengan efek *glassmorphism* yang responsif (*mobile-friendly*).
 - **Drag-and-Drop Area** — Unggah gambar daun dengan mudah menggunakan fitur seret & lepas atau melalui tombol file galeri.
 - **Pratinjau Gambar** — Menampilkan pratinjau foto sebelum proses analisis dimulai.
@@ -15,7 +15,7 @@ Aplikasi web *full-stack* berbasis AI untuk mendeteksi kesehatan tanaman dan men
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 - **Frontend:** HTML5, CSS3 (Vanilla CSS), Vanilla JavaScript.
 - **Backend:** Python (FastAPI framework).
 - **AI Engine:** Google Gemini API (model `gemini-2.5-flash`).
@@ -23,7 +23,7 @@ Aplikasi web *full-stack* berbasis AI untuk mendeteksi kesehatan tanaman dan men
 
 ---
 
-## ⚙️ Cara Menjalankan Secara Lokal (Local Development)
+## Cara Menjalankan Secara Lokal (Local Development)
 
 ### 1. Prasyarat
 - Python 3.9 ke atas instalasi di komputer Anda.
@@ -62,21 +62,7 @@ Buka file `frontend/index.html` langsung di browser Anda (atau gunakan ekstensi 
 
 ---
 
-## 🚀 Cara Deployment ke Vercel (All-in-One)
-
-Proyek ini telah dikonfigurasi untuk dideploy ke **Vercel** secara *all-in-one* (Frontend dan Serverless Backend berjalan bersama):
-
-1. Hubungkan repository GitHub Anda ke **Vercel**.
-2. Pilih repository `PlantCare-AI` lalu klik **Import**.
-3. Di bagian **Environment Variables**, tambahkan:
-   - **Key:** `GEMINI_API_KEY`
-   - **Value:** *[API Key Gemini Anda]*
-4. Klik **Deploy**.
-5. Selesai! Vercel akan otomatis mendeteksi rute di `vercel.json` dan mempublikasikan aplikasi Anda.
-
----
-
-## 👥 Kontribusi
+## Kontribusi
 Jika Anda ingin berkontribusi atau mengembangkan fitur lebih lanjut, silakan lakukan *Fork* repository ini dan kirimkan *Pull Request*.
 
-🌿 **PlantCare AI** — *Dibuat untuk kelestarian tanaman Anda.*
+**PlantCare AI** — *Dibuat untuk kelestarian tanaman Anda.*
