@@ -1,17 +1,18 @@
-# PlantCare AI — Deteksi Kesehatan Tanaman & Penyakit Daun
+# PlantCare AI — Deteksi Kesehatan Tanaman & Kematangan Buah
 
-Aplikasi web *full-stack* berbasis AI untuk mendeteksi kesehatan tanaman dan menganalisis penyakit daun dari foto secara instan. Didukung oleh **FastAPI** di backend dan integrasi **Google Gemini API (Vision)**.
+Aplikasi web *full-stack* berbasis AI untuk mendeteksi kesehatan tanaman, menganalisis penyakit daun, serta mengecek tingkat kematangan buah dari foto secara instan. Didukung oleh **FastAPI** di backend dan integrasi **Google Gemini API (Vision)**.
 
 ## Fitur Utama
+- **Dual Mode Analisis** — Pilih antara mode **Penyakit Daun** atau **Kematangan Buah**.
 - **Nature-Themed UI/UX** — Desain antarmuka modern bernuansa alam dengan efek *glassmorphism* yang responsif (*mobile-friendly*).
-- **Drag-and-Drop Area** — Unggah gambar daun dengan mudah menggunakan fitur seret & lepas atau melalui tombol file galeri.
+- **Drag-and-Drop Area** — Unggah gambar daun/buah dengan mudah menggunakan fitur seret & lepas atau melalui tombol file galeri.
 - **Pratinjau Gambar** — Menampilkan pratinjau foto sebelum proses analisis dimulai.
 - **Skeleton & Spinner Loading** — Animasi pemrosesan data untuk kenyamanan pengalaman pengguna.
 - **Laporan AI Terstruktur** — Menghasilkan diagnosis lengkap:
-  - **Status:** Sehat / Terindikasi Penyakit.
-  - **Nama Penyakit:** Jenis penyakit yang terdeteksi.
-  - **Deskripsi:** Detail penjelasan mengenai kondisi tanaman.
-  - **Rekomendasi:** Langkah konkret penanganan dan perawatan.
+  - **Status:** Sehat/Sakit (Penyakit Daun) atau Mentah/Matang/dll (Kematangan Buah).
+  - **Identifikasi:** Nama Penyakit atau Jenis Buah yang terdeteksi.
+  - **Deskripsi:** Detail penjelasan mengenai kondisi fisik daun/buah.
+  - **Rekomendasi:** Langkah perawatan, penyimpanan, atau kapan waktu yang tepat untuk konsumsi.
 
 ---
 
