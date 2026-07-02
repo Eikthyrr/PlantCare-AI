@@ -5,18 +5,19 @@ PlantCare AI — Backend API Server
 Menggunakan FastAPI untuk menerima upload gambar,
 mengirimnya ke Google Gemini API (model vision),
 dan mengembalikan hasil analisis dalam format JSON.
+
+Mendukung dua mode analisis:
+1. Deteksi Penyakit Daun (mode=leaf)
+2. Deteksi Kematangan Buah (mode=fruit)
 ============================================
 """
 
 import os
 import json
-import base64
-from io import BytesIO
 from typing import Optional
 
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, Form, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from google import genai
@@ -50,9 +51,9 @@ GEMINI_MODEL = "gemini-2.5-flash"
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 # ==========================================
-# Prompt untuk Gemini
+# Prompt untuk mode Penyakit Daun
 # ==========================================
-ANALYSIS_PROMPT = """Kamu adalah seorang pakar agronomis dan fitopatologis yang sangat berpengalaman.
+LEAF_ANALYSIS_PROMPT = """Kamu adalah seorang pakar agronomis dan fitopatologis yang sangat berpengalaman.
 Analisis gambar daun tanaman berikut ini dan berikan diagnosis kesehatan tanaman.
 
 PENTING: Jawab HANYA dalam format JSON berikut (tanpa markdown, tanpa code block, hanya JSON murni):
@@ -72,10 +73,32 @@ Aturan:
 """
 
 # ==========================================
+# Prompt untuk mode Kematangan Buah
+# ==========================================
+FRUIT_ANALYSIS_PROMPT = """Kamu adalah seorang pakar agronomi dan pascapanen buah-buahan yang sangat berpengalaman.
+Analisis gambar buah berikut ini dan tentukan tingkat kematangannya.
+
+PENTING: Jawab HANYA dalam format JSON berikut (tanpa markdown, tanpa code block, hanya JSON murni):
+{
+    "status": "Mentah" atau "Setengah Matang" atau "Matang" atau "Terlalu Matang",
+    "disease_name": "Nama jenis buah yang terdeteksi dalam bahasa Indonesia",
+    "description": "Deskripsi singkat tentang tingkat kematangan buah berdasarkan warna, tekstur, dan ciri visual lainnya (2-4 kalimat)",
+    "recommendation": "Rekomendasi kapan waktu terbaik untuk dikonsumsi, cara penyimpanan yang tepat, atau tips pematangan jika masih mentah (2-4 kalimat)"
+}
+
+Aturan:
+1. Identifikasi jenis buah terlebih dahulu, lalu analisis tingkat kematangannya.
+2. Status harus salah satu dari: "Mentah", "Setengah Matang", "Matang", atau "Terlalu Matang".
+3. Deskripsi harus menjelaskan ciri visual yang menjadi dasar penilaian kematangan (warna kulit, bintik, tekstur, dll).
+4. Rekomendasi harus praktis: kapan sebaiknya dikonsumsi, cara menyimpan agar tahan lama, atau cara mempercepat pematangan.
+5. Jika gambar bukan buah, tetap berikan respons JSON dengan status "Tidak Dapat Dianalisis" dan jelaskan di deskripsi.
+"""
+
+# ==========================================
 # Schema Respons API
 # ==========================================
 class AnalysisResponse(BaseModel):
-    """Schema untuk respons hasil analisis tanaman."""
+    """Schema untuk respons hasil analisis (digunakan oleh kedua mode)."""
     status: str
     disease_name: Optional[str] = ""
     description: str
@@ -86,8 +109,8 @@ class AnalysisResponse(BaseModel):
 # ==========================================
 app = FastAPI(
     title="PlantCare AI API",
-    description="API untuk mendeteksi penyakit tanaman menggunakan Google Gemini Vision",
-    version="1.0.0",
+    description="API untuk mendeteksi penyakit tanaman dan kematangan buah menggunakan Google Gemini Vision",
+    version="1.1.0",
 )
 
 # --- CORS Middleware ---
@@ -109,19 +132,24 @@ async def root():
     return {
         "app": "PlantCare AI",
         "status": "running",
-        "version": "1.0.0"
+        "version": "1.1.0",
+        "modes": ["leaf", "fruit"]
     }
 
 # ==========================================
 # Endpoint Analisis Gambar
 # ==========================================
 @app.post("/api/analyze", response_model=AnalysisResponse)
-async def analyze_plant(file: UploadFile = File(...)):
+async def analyze_plant(
+    file: UploadFile = File(...),
+    mode: str = Form("leaf"),  # Mode analisis: "leaf" atau "fruit"
+):
     """
-    Menerima upload gambar daun, mengirimnya ke Gemini Vision
+    Menerima upload gambar dan mode analisis, mengirimnya ke Gemini Vision
     untuk dianalisis, lalu mengembalikan hasil diagnosis.
     
     - **file**: File gambar (JPG, PNG, atau WebP, maks. 10MB)
+    - **mode**: "leaf" untuk penyakit daun, "fruit" untuk kematangan buah
     """
     
     # --- Validasi tipe file ---
@@ -142,6 +170,12 @@ async def analyze_plant(file: UploadFile = File(...)):
             detail="Ukuran file terlalu besar. Maksimal 10MB."
         )
     
+    # --- Pilih prompt berdasarkan mode ---
+    if mode == "fruit":
+        prompt = FRUIT_ANALYSIS_PROMPT
+    else:
+        prompt = LEAF_ANALYSIS_PROMPT
+    
     # --- Kirim gambar ke Gemini untuk dianalisis ---
     try:
         # Buat objek Part dari bytes gambar
@@ -154,7 +188,7 @@ async def analyze_plant(file: UploadFile = File(...)):
         response = client.models.generate_content(
             model=GEMINI_MODEL,
             contents=[
-                ANALYSIS_PROMPT,
+                prompt,
                 image_part,
             ],
         )

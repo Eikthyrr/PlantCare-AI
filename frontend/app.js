@@ -5,6 +5,10 @@
  * Menangani upload gambar (drag-and-drop + file picker),
  * preview gambar, panggilan API ke backend, dan
  * rendering hasil analisis dari Gemini AI.
+ * 
+ * Mendukung dua mode analisis:
+ * 1. Penyakit Daun (leaf)
+ * 2. Kematangan Buah (fruit)
  * ============================================
  */
 
@@ -46,18 +50,25 @@ const DOM = {
     resultStatusIcon:$('#result-status-icon'),
     resultDisease:   $('#result-disease'),
     resultDiseaseCard:$('#result-disease-card'),
+    resultDiseaseIcon:$('#result-disease-icon'),
+    resultDiseaseLabel:$('#result-disease-label'),
     resultDescription:$('#result-description'),
     resultRecommendation: $('#result-recommendation'),
     skeletonPanel:   $('#skeleton-panel'),
     resetBtn:        $('#reset-btn'),
     toastContainer:  $('#toast-container'),
+    // Mode tabs
+    modeTabs:        $('#mode-tabs'),
+    tabLeaf:         $('#tab-leaf'),
+    tabFruit:        $('#tab-fruit'),
 };
 
 // ==========================================
 // State Aplikasi
 // ==========================================
-let selectedFile = null;    // File gambar yang dipilih user
-let isAnalyzing = false;    // Flag untuk mencegah double-submit
+let selectedFile = null;        // File gambar yang dipilih user
+let isAnalyzing = false;        // Flag untuk mencegah double-submit
+let currentMode = 'leaf';       // Mode analisis aktif: 'leaf' atau 'fruit'
 
 // ==========================================
 // Inisialisasi Event Listeners
@@ -103,8 +114,34 @@ function init() {
     // --- Tombol Reset (analisis ulang) ---
     DOM.resetBtn.addEventListener('click', handleReset);
 
+    // --- Mode Tabs (Penyakit Daun / Kematangan Buah) ---
+    DOM.modeTabs.addEventListener('click', (e) => {
+        const tab = e.target.closest('.mode-tab');
+        if (!tab || tab.classList.contains('active')) return;
+        switchMode(tab.dataset.mode);
+    });
+
     // --- Scroll animations (Intersection Observer) ---
     setupScrollAnimations();
+}
+
+// ==========================================
+// Mode Switching (Leaf / Fruit)
+// ==========================================
+function switchMode(mode) {
+    currentMode = mode;
+
+    // Update active tab visual
+    document.querySelectorAll('.mode-tab').forEach(tab => tab.classList.remove('active'));
+    if (mode === 'fruit') {
+        DOM.tabFruit.classList.add('active');
+    } else {
+        DOM.tabLeaf.classList.add('active');
+    }
+
+    // Sembunyikan hasil sebelumnya saat ganti mode
+    DOM.resultPanel.style.display = 'none';
+    DOM.skeletonPanel.style.display = 'none';
 }
 
 // ==========================================
@@ -232,9 +269,10 @@ async function handleAnalyze() {
     DOM.skeletonPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
     try {
-        // Kirim gambar sebagai multipart/form-data ke backend
+        // Kirim gambar + mode sebagai multipart/form-data ke backend
         const formData = new FormData();
         formData.append('file', selectedFile);
+        formData.append('mode', currentMode); // Kirim mode analisis (leaf/fruit)
 
         const response = await fetch(CONFIG.API_URL, {
             method: 'POST',
@@ -280,29 +318,96 @@ function displayResults(data) {
     DOM.skeletonPanel.style.display = 'none';
     DOM.resultPanel.style.display = 'block';
 
-    // Tentukan apakah tanaman sehat atau sakit
+    if (currentMode === 'fruit') {
+        // ---- MODE: Kematangan Buah ----
+        displayFruitResults(data);
+    } else {
+        // ---- MODE: Penyakit Daun (default) ----
+        displayLeafResults(data);
+    }
+
+    // Scroll ke panel hasil
+    DOM.resultPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/**
+ * Menampilkan hasil analisis untuk mode Penyakit Daun
+ */
+function displayLeafResults(data) {
     const isHealthy = data.status && data.status.toLowerCase().includes('sehat');
 
-    // --- Badge status ---
+    // Badge status
     DOM.resultBadge.textContent = isHealthy ? '✅ Sehat' : '⚠️ Terindikasi Penyakit';
     DOM.resultBadge.className = `result-badge ${isHealthy ? 'healthy' : 'diseased'}`;
 
-    // --- Status ---
+    // Status card
     DOM.resultStatus.textContent = data.status || 'Tidak diketahui';
     DOM.resultStatusIcon.textContent = isHealthy ? '🌿' : '🍂';
     DOM.resultStatusCard.className = `result-item ${isHealthy ? 'status-healthy' : 'status-diseased'}`;
 
-    // --- Nama Penyakit ---
+    // Label & icon untuk penyakit daun
+    DOM.resultDiseaseLabel.textContent = 'Nama Penyakit';
+    DOM.resultDiseaseIcon.textContent = '🦠';
     DOM.resultDisease.textContent = data.disease_name || (isHealthy ? 'Tidak ada' : 'Tidak teridentifikasi');
 
-    // --- Deskripsi ---
+    // Deskripsi & Rekomendasi
     DOM.resultDescription.textContent = data.description || 'Tidak ada deskripsi tersedia.';
-
-    // --- Rekomendasi ---
     DOM.resultRecommendation.textContent = data.recommendation || 'Tidak ada rekomendasi tersedia.';
+}
 
-    // Scroll ke panel hasil
-    DOM.resultPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+/**
+ * Menampilkan hasil analisis untuk mode Kematangan Buah
+ */
+function displayFruitResults(data) {
+    const statusLower = (data.status || '').toLowerCase();
+
+    // Tentukan tingkat kematangan untuk styling
+    let badgeClass, badgeText, statusIcon, statusClass;
+
+    if (statusLower.includes('matang') && statusLower.includes('terlalu')) {
+        badgeClass = 'overripe';
+        badgeText = '🟤 Terlalu Matang';
+        statusIcon = '🍌';
+        statusClass = 'status-overripe';
+    } else if (statusLower.includes('matang') && !statusLower.includes('setengah')) {
+        badgeClass = 'ripe';
+        badgeText = '🟢 Matang';
+        statusIcon = '🍎';
+        statusClass = 'status-ripe';
+    } else if (statusLower.includes('setengah')) {
+        badgeClass = 'half-ripe';
+        badgeText = '🟡 Setengah Matang';
+        statusIcon = '🍊';
+        statusClass = 'status-half-ripe';
+    } else if (statusLower.includes('mentah')) {
+        badgeClass = 'unripe';
+        badgeText = '⚪ Mentah';
+        statusIcon = '🥝';
+        statusClass = 'status-unripe';
+    } else {
+        badgeClass = 'diseased';
+        badgeText = '❓ ' + data.status;
+        statusIcon = '❓';
+        statusClass = '';
+    }
+
+    // Badge status
+    DOM.resultBadge.textContent = badgeText;
+    DOM.resultBadge.className = `result-badge ${badgeClass}`;
+
+    // Status card
+    DOM.resultStatus.textContent = data.status || 'Tidak diketahui';
+    DOM.resultStatusIcon.textContent = statusIcon;
+    DOM.resultStatusCard.className = `result-item ${statusClass}`;
+
+    // Label & icon untuk jenis buah (menggunakan field disease_name untuk nama buah)
+    DOM.resultDiseaseLabel.textContent = 'Jenis Buah';
+    DOM.resultDiseaseIcon.textContent = '🍇';
+    DOM.resultDisease.textContent = data.disease_name || 'Tidak teridentifikasi';
+
+    // Deskripsi & Rekomendasi
+    DOM.resultDescription.textContent = data.description || 'Tidak ada deskripsi tersedia.';
+    DOM.resultRecommendation.textContent = data.recommendation || 'Tidak ada rekomendasi tersedia.';
 }
 
 // ==========================================
@@ -343,7 +448,7 @@ function showToast(message, type = 'info') {
 function setupScrollAnimations() {
     // Elemen-elemen yang akan di-animasikan saat masuk viewport
     const targets = document.querySelectorAll(
-        '.feature-card, .step-card, .section-header'
+        '.feature-card, .step-card, .section-header, .mode-tab'
     );
 
     const observer = new IntersectionObserver(

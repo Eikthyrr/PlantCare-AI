@@ -45,14 +45,14 @@
             <div class="hero-content">
                 <div class="hero-badge">
                     <span class="badge-dot"></span>
-                    AI-Powered Plant Diagnostics
+                    AI-Powered Plant & Fruit Diagnostics
                 </div>
                 <h1 class="hero-title">
                     Jaga Kesehatan <br>
                     <span class="hero-title-accent">Tanaman Anda</span>
                 </h1>
                 <p class="hero-subtitle">
-                    Upload foto daun tanaman, dan biarkan AI kami mendeteksi penyakit serta memberikan rekomendasi perawatan yang tepat — dalam hitungan detik.
+                    Upload foto daun atau buah, dan biarkan AI kami mendeteksi penyakit tanaman serta kematangan buah — dalam hitungan detik.
                 </p>
                 <a href="#upload-section" class="hero-cta" id="hero-cta">
                     <span>Mulai Analisis</span>
@@ -122,9 +122,27 @@
         <section class="upload-section" id="upload-section">
             <div class="section-container">
                 <div class="section-header">
-                    <span class="section-tag">Analisis Tanaman</span>
-                    <h2 class="section-title">Upload Foto Daun</h2>
-                    <p class="section-desc">Ambil foto daun yang ingin Anda periksa kesehatannya, lalu unggah di bawah ini.</p>
+                    <span class="section-tag">Analisis AI</span>
+                    <h2 class="section-title" id="upload-title">Upload Foto</h2>
+                    <p class="section-desc" id="upload-desc">Pilih mode analisis, lalu unggah foto untuk memulai.</p>
+                </div>
+
+                <!-- Mode Selector Tabs -->
+                <div class="mode-tabs" id="mode-tabs">
+                    <button class="mode-tab active" id="tab-leaf" data-mode="leaf">
+                        <span class="mode-tab-icon">🍃</span>
+                        <span class="mode-tab-text">
+                            <span class="mode-tab-title">Penyakit Daun</span>
+                            <span class="mode-tab-subtitle">Deteksi penyakit pada daun tanaman</span>
+                        </span>
+                    </button>
+                    <button class="mode-tab" id="tab-fruit" data-mode="fruit">
+                        <span class="mode-tab-icon">🍎</span>
+                        <span class="mode-tab-text">
+                            <span class="mode-tab-title">Kematangan Buah</span>
+                            <span class="mode-tab-subtitle">Cek tingkat kematangan buah</span>
+                        </span>
+                    </button>
                 </div>
 
                 <div class="analysis-wrapper">
@@ -195,11 +213,11 @@
                                 </div>
                             </div>
 
-                            <!-- Nama Penyakit -->
+                            <!-- Nama Penyakit / Detail Buah (label dinamis) -->
                             <div class="result-item" id="result-disease-card">
-                                <div class="result-item-icon">🦠</div>
+                                <div class="result-item-icon" id="result-disease-icon">🦠</div>
                                 <div class="result-item-content">
-                                    <span class="result-item-label">Nama Penyakit</span>
+                                    <span class="result-item-label" id="result-disease-label">Nama Penyakit</span>
                                     <span class="result-item-value" id="result-disease"></span>
                                 </div>
                             </div>

@@ -520,6 +520,114 @@ button {
     z-index: 1;
 }
 
+/* ---------- Mode Selector Tabs ---------- */
+.mode-tabs {
+    display: flex;
+    gap: var(--space-md);
+    max-width: 780px;
+    margin: 0 auto var(--space-xl);
+}
+
+.mode-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    background: var(--bg-card);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid var(--clr-neutral-200);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: var(--transition-base);
+    text-align: left;
+}
+
+.mode-tab:hover {
+    border-color: var(--clr-primary-300);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.mode-tab.active {
+    border-color: var(--clr-primary-500);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.03));
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12), var(--shadow-md);
+}
+
+.mode-tab-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.mode-tab-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.mode-tab-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--clr-neutral-800);
+}
+
+.mode-tab-subtitle {
+    font-size: 0.78rem;
+    color: var(--clr-neutral-400);
+}
+
+.mode-tab.active .mode-tab-title {
+    color: var(--clr-primary-700);
+}
+
+.mode-tab.active .mode-tab-subtitle {
+    color: var(--clr-primary-500);
+}
+
+/* Fruit mode badge colors */
+.result-badge.ripe {
+    background: rgba(34, 197, 94, 0.12);
+    color: #16a34a;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.result-badge.half-ripe {
+    background: rgba(245, 158, 11, 0.12);
+    color: #d97706;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.result-badge.unripe {
+    background: rgba(107, 114, 128, 0.1);
+    color: #4b5563;
+    border: 1px solid rgba(107, 114, 128, 0.25);
+}
+
+.result-badge.overripe {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+/* Fruit status card borders */
+.result-item.status-ripe {
+    border-left: 3px solid var(--clr-success);
+}
+
+.result-item.status-half-ripe {
+    border-left: 3px solid var(--clr-warning);
+}
+
+.result-item.status-unripe {
+    border-left: 3px solid var(--clr-neutral-400);
+}
+
+.result-item.status-overripe {
+    border-left: 3px solid var(--clr-danger);
+}
+
 .analysis-wrapper {
     max-width: 780px;
     margin: 0 auto;
@@ -1144,6 +1252,10 @@ button {
         flex-direction: column;
         text-align: center;
     }
+
+    .mode-tabs {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1162,5 +1274,17 @@ button {
 
     .toast {
         max-width: 100%;
+    }
+
+    .mode-tab {
+        padding: var(--space-sm) var(--space-md);
+    }
+
+    .mode-tab-icon {
+        font-size: 1.5rem;
+    }
+
+    .mode-tab-subtitle {
+        display: none;
     }
 }
